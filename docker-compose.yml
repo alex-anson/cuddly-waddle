@@ -1,0 +1,14 @@
+# version: '3.4' # needed for backward compatibility. informative only.
+
+services:
+  reproex:
+    image: reproex
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - type: bind
+        source: /Users/alexan/Desktop/repos/scratch/golang/docker-example/my-bind-mnt/data.json
+        target: /home/alex/code/data.json
+    ports:
+      - 3000:10000
