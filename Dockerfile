@@ -29,3 +29,20 @@ CMD [ "go", "run", "pkg/movies/movies.go" ]
 
 # docker build . -t leggo-app && docker run -p 3000:10000 leggo-app
 # docker-compose up  ...  docker-compose down
+
+# VS Code Generated
+# #build stage
+# FROM golang:alpine AS builder
+# RUN apk add --no-cache git
+# WORKDIR /go/src/app
+# COPY . .
+# RUN go get -d -v ./...
+# RUN go build -o /go/bin/app -v ./...
+
+# #final stage
+# FROM alpine:latest
+# RUN apk --no-cache add ca-certificates
+# COPY --from=builder /go/bin/app /app
+# ENTRYPOINT /app
+# LABEL Name=goapi Version=0.0.1
+# EXPOSE 3000
