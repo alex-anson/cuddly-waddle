@@ -6,7 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
-	// "os"
+	"os"
 
 	// Using the gorilla/mux 3rd party router package instead of the standard library
 	// net/http router. Allows you to more easily perform tasks such as parsing path
@@ -57,16 +57,19 @@ func main() {
 	// Will execute when you `go run` this file
 	fmt.Println("Mux Routers 🦊")
 
-	// Get an environment variable in Go.
-	// if os.Getenv("CONTAINER") == "true" {
-	// 	// Print contents of a json file
-	// ReadJsonFile()
+	// TODO: figure this out
+	// var jsonMovie Movie
+	// // Get an environment variable in Go.
+	// if os.Getenv("GOCACHE") == "/root/.cache/go-build" {
+	jsonMovie := readMovieFromJSON()
 	// }
+	// Else it'll have zero values
 
 	MovieList = []Movie{
 		{Id: "1", Title: "Everything Everywhere All at Once", Desc: allAtOnceDesc, ReleaseYear: 2022},
 		{Id: "2", Title: "Super Troopers", Desc: troopersDesc, ReleaseYear: 2001},
 		{Id: "3", Title: "3rd title", Desc: "Another movie", ReleaseYear: 1998},
+		jsonMovie,
 	}
 	registerHandlers()
 }
@@ -186,3 +189,33 @@ func updateMovie(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "%+v", string(putBody))
 }
+
+// TODO: More than one movie.
+func readMovieFromJSON() Movie {
+	jsonFile, err := os.Open("./data.json")
+
+	if err != nil {
+		fmt.Println("error reading json file", err)
+	}
+
+	// Defer closing the file, so we can parse it.
+	defer jsonFile.Close()
+
+	// Read the opened json file as a byte array
+	byteValue, _ := io.ReadAll(jsonFile)
+
+	jsonFile.Close()
+
+	var movie Movie
+	err = json.Unmarshal(byteValue, &movie)
+
+	if err != nil {
+		fmt.Println(err.Error(), "\nproblem unmarshalling")
+	}
+
+	return movie
+}
+
+// var stuffs map[string]interface{}
+// The type of the `stuffs` variable = a map where the keys are strings, and the
+// values are of type interface{}

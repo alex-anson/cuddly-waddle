@@ -21,11 +21,9 @@ RUN cd pkg/movies \
     # Make sure go.mod matches the source code in the module.
     && go mod tidy
 
-# TODO: make this idea work, or take it out
-# ENV CONTAINER=true 
-
 CMD [ "go", "run", "pkg/movies/movies.go" ]
 # CMD [ "ls", "-lah" ]
+# CMD [ "go", "env" ]
 
 # docker build . -t leggo-app && docker run -p 3000:10000 leggo-app
 # docker-compose up  ...  docker-compose down
