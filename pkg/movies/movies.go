@@ -57,12 +57,11 @@ func main() {
 	// Will execute when you `go run` this file
 	fmt.Println("Mux Routers 🦊")
 
-	// TODO: figure this out
-	// var jsonMovie Movie
-	// // Get an environment variable in Go.
-	// if os.Getenv("GOCACHE") == "/root/.cache/go-build" {
-	jsonMovie := readMovieFromJSON()
-	// }
+	var jsonMovie Movie
+	// Get an environment variable in Go.
+	if os.Getenv("GOPATH") == "/go" && os.Getenv("HOME") == "/root" {
+		jsonMovie = readMovieFromJSON()
+	}
 	// Else it'll have zero values
 
 	MovieList = []Movie{
