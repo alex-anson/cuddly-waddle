@@ -1,0 +1,25 @@
+POST http://localhost:3000/movie HTTP/1.1
+content-type: application/json
+
+{
+    "Id": "4",
+    "Title": "Movie Titleeeeeeeee",
+    "Desc": "Woooowhhhooo",
+    "ReleaseYear": 2012
+}
+
+###
+
+DELETE http://localhost:3000/movie/1 HTTP/1.1
+content-type: application/json
+
+###
+
+PUT http://localhost:3000/movie/2 HTTP/1.1
+content-type: application/json
+
+{
+    "Title": "replace super troopers, i guess",
+    "Desc": "a movie that isn't as good. MEOW",
+    "ReleaseYear": 2012
+}
