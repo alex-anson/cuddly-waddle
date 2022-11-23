@@ -70,7 +70,8 @@ func main() {
 		{Id: "3", Title: "3rd title", Desc: "Another movie", ReleaseYear: 1998},
 	}
 
-	// Put the two together
+	// Concatenate two SLICES
+	// golang's equivalent to javascript's spread operator
 	MovieList = append(MovieList, jsonMovies...)
 
 	registerHandlers()
