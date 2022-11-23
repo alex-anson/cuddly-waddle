@@ -57,10 +57,10 @@ func main() {
 	// Will execute when you `go run` this file
 	fmt.Println("Mux Routers 🦊")
 
-	var jsonMovie Movie
+	var jsonMovies []Movie
 	// Get an environment variable in Go.
 	if os.Getenv("GOPATH") == "/go" && os.Getenv("HOME") == "/root" {
-		jsonMovie = readMovieFromJSON()
+		jsonMovies = readMoviesFromJSON()
 	}
 	// Else it'll have zero values
 
@@ -68,8 +68,11 @@ func main() {
 		{Id: "1", Title: "Everything Everywhere All at Once", Desc: allAtOnceDesc, ReleaseYear: 2022},
 		{Id: "2", Title: "Super Troopers", Desc: troopersDesc, ReleaseYear: 2001},
 		{Id: "3", Title: "3rd title", Desc: "Another movie", ReleaseYear: 1998},
-		jsonMovie,
 	}
+
+	// Put the two together
+	MovieList = append(MovieList, jsonMovies...)
+
 	registerHandlers()
 }
 
@@ -189,8 +192,7 @@ func updateMovie(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%+v", string(putBody))
 }
 
-// TODO: More than one movie.
-func readMovieFromJSON() Movie {
+func readMoviesFromJSON() []Movie {
 	jsonFile, err := os.Open("./data.json")
 
 	if err != nil {
@@ -205,14 +207,14 @@ func readMovieFromJSON() Movie {
 
 	jsonFile.Close()
 
-	var movie Movie
-	err = json.Unmarshal(byteValue, &movie)
+	var movies []Movie
+	err = json.Unmarshal(byteValue, &movies)
 
 	if err != nil {
 		fmt.Println(err.Error(), "\nproblem unmarshalling")
 	}
 
-	return movie
+	return movies
 }
 
 // var stuffs map[string]interface{}
