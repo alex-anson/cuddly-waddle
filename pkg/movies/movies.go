@@ -200,10 +200,15 @@ func readMoviesFromJSON() []Movie {
 		fmt.Println("error reading json file", err)
 	}
 
-	// Defer closing the file, so we can parse it.
-	// This ƒn will execute after everything else in this ƒn executes - after it
-	// finishes its' final statement and exits, but before it actually returns.
-	// Deferred functions are executed in LIFO order.
+	/**
+	Defer closing the file, so we can parse it.
+	This ƒn will execute after everything else in this ƒn executes - after it
+	finishes its' final statement and exits, but before it actually returns.
+	Deferred functions are executed in LIFO order.
+
+	Need to call this AFTER checking for an error - because if you get an error,
+	you haven't actually gotten the jsonFile. Program would fail
+	*/
 	defer jsonFile.Close()
 
 	// Read the opened json file as a byte array
