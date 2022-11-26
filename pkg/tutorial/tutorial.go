@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-// Working with methods.
+// WORKING WITH METHODS.
 
 func Tutorial() {
 	// Declaring a greeter struct
@@ -15,6 +15,10 @@ func Tutorial() {
 	}
 	// Method invocation: Calling the greet ƒn, preceeding it with the above struct.
 	g.greet()
+
+	// To illustrate difference with pointers versus not
+	g.mutateName()
+	fmt.Println(g.name)
 
 	// myNumber type has a method called printInteger.
 	myNumber.printInteger(12)
@@ -46,6 +50,13 @@ func (g greeter) greet() {
 	fmt.Println(g.greeting, g.name)
 	// Operating on a COPY of the greeter object - not using a pointer. Changes
 	// here will not be reflected in the Tutorial function
+}
+
+// Passing a greeter POINTER. Changes here WILL be reflected in the Tutorial ƒn
+func (g *greeter) mutateName() {
+	// Implicit dereferencing of pointers. Don't have to say "(*g).name" - but we
+	// _could_
+	g.name = "ALEX 🔥🔥🔥🔥"
 }
 
 type myNumber int
