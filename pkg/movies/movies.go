@@ -201,12 +201,13 @@ func readMoviesFromJSON() []Movie {
 	}
 
 	// Defer closing the file, so we can parse it.
+	// This ƒn will execute after everything else in this ƒn executes - after it
+	// finishes its' final statement and exits, but before it actually returns.
+	// Deferred functions are executed in LIFO order.
 	defer jsonFile.Close()
 
 	// Read the opened json file as a byte array
 	byteValue, _ := io.ReadAll(jsonFile)
-
-	jsonFile.Close()
 
 	var movies []Movie
 	err = json.Unmarshal(byteValue, &movies)
