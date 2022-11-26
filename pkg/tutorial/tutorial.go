@@ -77,8 +77,9 @@ type anotherExample struct {
 // Added this + related stuff separate from the tutorial. I got curious.
 // "(a anotherExample)" gives us access to the types on that struct within myMethod
 // "(a anotherExample)" provides a context that "myMethod" is executing in.
-// "anotherExample" is specified as a value type; not using a pointer. It's called
-// a value receiver. The received object in "myMethod" is the value "anotherExample".
+// "anotherExample" is specified as a value type; not using a pointer.
+// The "a" of "(a anotherExample)" is called a value receiver. The received object
+// in "myMethod" is the value "a".
 func (a anotherExample) myMethod() {
 	fmt.Println(a.x, a.y)
 }
