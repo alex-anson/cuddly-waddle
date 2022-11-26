@@ -47,6 +47,7 @@ type greeter struct {
 // type." ... we're using the "greeter" struct, but could use any type. It's common
 // to use structs.
 func (g greeter) greet() {
+	// ^ Value receiver - gets *copy* of type
 	fmt.Println(g.greeting, g.name)
 	// Operating on a COPY of the greeter object - not using a pointer. Changes
 	// here will not be reflected in the Tutorial function
@@ -54,6 +55,8 @@ func (g greeter) greet() {
 
 // Passing a greeter POINTER. Changes here WILL be reflected in the Tutorial ƒn
 func (g *greeter) mutateName() {
+	// ^ Pointer receiver - gets *pointer to* type
+
 	// Implicit dereferencing of pointers. Don't have to say "(*g).name" - but we
 	// _could_
 	g.name = "ALEX 🔥🔥🔥🔥"
