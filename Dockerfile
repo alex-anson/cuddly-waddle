@@ -21,6 +21,11 @@ RUN cd pkg/movies \
     # Make sure go.mod matches the source code in the module.
     && go mod tidy
 
+# Docker won't copy over any of the files specified in the .dockerignore file.
+RUN cd pkg/tutorial \
+    # Create the go.mod file
+    && go mod init pkg/tutorial
+
 CMD [ "go", "run", "pkg/movies/movies.go" ]
 # CMD [ "ls", "-lah" ]
 # CMD [ "go", "env" ]

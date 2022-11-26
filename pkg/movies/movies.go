@@ -1,5 +1,6 @@
 package main
 
+// Libs
 import (
 	"encoding/json"
 	"fmt"
@@ -13,6 +14,9 @@ import (
 	// or query params.
 	"github.com/gorilla/mux"
 )
+
+// Local
+import "pkg/tutorial"
 
 const PORT = ":10000"
 
@@ -56,6 +60,8 @@ func registerHandlers() {
 func main() {
 	// Will execute when you `go run` this file
 	fmt.Println("Mux Routers 🦊")
+
+	tutorial.Tutorial()
 
 	var jsonMovies []Movie
 	// Get an environment variable in Go.
