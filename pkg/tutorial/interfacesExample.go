@@ -102,3 +102,9 @@ func (ic *IntCounter) Increment() int {
 	*ic = *ic + 2
 	return int(*ic)
 }
+
+// How to compose interfaces together - very powerful concept in Go, one of the
+// keys to scalability.
+// Single method interfaces are very common & powerful, BECAUSE they define a very
+// specific behavior. Because they have one method, they're pretty unopinionated,
+// and can be implemented in a lot of ways - which means they're really flexible.
