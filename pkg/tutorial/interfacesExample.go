@@ -37,7 +37,8 @@ func interfaceMain() {
 
 	// Part of the example from `combiningInterfaces.go`
 	var wc WriterCloser = NewBufferedWriterCloser()
-	wc.Write([]byte("uh, this is a test"))
+	// Converted string to byte slice because that's what the Write method expects.
+	wc.Write([]byte("uh, this is a test. let's make it longer, just so what's happening is more obvious"))
 	wc.Close()
 }
 
