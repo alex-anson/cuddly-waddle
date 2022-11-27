@@ -1,6 +1,9 @@
 package tutorial
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+)
 
 // EXPLORING INTERFACES
 // Implicit implementation.
@@ -32,6 +35,10 @@ func interfaceMain() {
 	for i := 0; i < 6; i++ {
 		fmt.Println(inc.Increment())
 	}
+
+	var wc WriterCloser = NewBufferedWriterCloser()
+	wc.Write([]byte("uh, this is a test"))
+	wc.Close()
 }
 
 // If this were a struct, we'd enter the data we want the struct to hold on to -
@@ -108,3 +115,53 @@ func (ic *IntCounter) Increment() int {
 // Single method interfaces are very common & powerful, BECAUSE they define a very
 // specific behavior. Because they have one method, they're pretty unopinionated,
 // and can be implemented in a lot of ways - which means they're really flexible.
+
+type Closer interface {
+	Close() error
+}
+
+type WriterCloser interface {
+	Writer // (this interface was declared during the first example)
+	Closer
+}
+
+type BufferedWriterCloser struct {
+	buffer *bytes.Buffer
+}
+
+func (bwc *BufferedWriterCloser) Write(data []byte) (int, error) {
+	n, err := bwc.buffer.Write(data)
+	if err != nil {
+		return 0, err
+	}
+
+	v := make([]byte, 8)
+	for bwc.buffer.Len() > 8 {
+		_, err := bwc.buffer.Read(v)
+		if err != nil {
+			return 0, err
+		}
+		_, err = fmt.Println(string(v))
+		if err != nil {
+			return 0, err
+		}
+	}
+	return n, nil
+}
+
+func (bwc *BufferedWriterCloser) Close() error {
+	for bwc.buffer.Len() > 0 {
+		data := bwc.buffer.Next(8)
+		_, err := fmt.Println((string(data)))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func NewBufferedWriterCloser() *BufferedWriterCloser {
+	return &BufferedWriterCloser{
+		buffer: bytes.NewBuffer([]byte{}),
+	}
+}
