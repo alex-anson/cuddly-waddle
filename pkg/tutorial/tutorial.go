@@ -34,6 +34,8 @@ func Tutorial() {
 	// which is named "a" within the context of myMethod. Can then access the fields
 	// on that object, which are "x" and "y"
 	m.myMethod()
+
+	interfaceMain()
 }
 
 type greeter struct {
