@@ -41,6 +41,7 @@ type WriterCloser interface {
 // ^ WriterCloser interface is gonna be implemented if an object has the
 // "Write([]byte) (int, error)" method AND the "Close() error" method on it.
 
+// THIS STRUCT HAS TWO METHODS ON IT. I think this is a "concrete type"
 type BufferedWriterCloser struct {
 	buffer *bytes.Buffer
 }

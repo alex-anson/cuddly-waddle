@@ -62,7 +62,7 @@ func interfaceMain() {
 	// Continuing type conversion...
 	// Empty interface is just that, an interface with no methods on it. What's
 	// nice about it is that *everything* can be cast into an object that has no
-	// methods on it, even primitives. (i.e. can cast an integer to an emtpy interface)
+	// methods on it, even primitives. (i.e. can cast an integer to an empty interface)
 	// Useful in situations where you have multiple things you need to work with
 	// that aren't type compatible
 	// Problem with empty interface: can't do anything with it. Because it has no
