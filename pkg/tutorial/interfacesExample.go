@@ -78,6 +78,20 @@ func interfaceMain() {
 		wc.Close()
 	}
 	// Empty interface is very common. BUT - it's almost always gonna be an intermediate step.
+
+	// Type switches
+	var i interface{} = 0
+	switch i.(type) {
+	// ^ this is a type switch.
+	// the cases are types.
+	// Type switches are commonly paired with the empty interface.
+	case int:
+		fmt.Println("logic to process an integer goes here")
+	case string:
+		fmt.Println("logic to process a string goes here")
+	default:
+		fmt.Println("logic to process something else goes here")
+	}
 }
 
 // If this were a struct, we'd enter the data we want the struct to hold on to -
