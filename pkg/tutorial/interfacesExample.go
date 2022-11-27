@@ -2,6 +2,7 @@ package tutorial
 
 import (
 	"fmt"
+	"io"
 )
 
 // EXPLORING INTERFACES
@@ -40,6 +41,43 @@ func interfaceMain() {
 	// Converted string to byte slice because that's what the Write method expects.
 	wc.Write([]byte("uh, this is a test. let's make it longer, just so what's happening is more obvious"))
 	wc.Close()
+
+	// Type conversion.
+	// storeIt := object.(typeToConvertTo)     ... asterisk needed if it's a pointer type
+	bwc := wc.(*BufferedWriterCloser)
+	fmt.Println(bwc) // Memory address of this BufferedWriterCloser
+	// If the type conversion succeeds, you can work with that variable now. In this
+	// case, could work with bwc no longer as a WriterCloser, but as a BufferedWriterCloser.
+	// ......
+	// If the type conversion fails, the app would panic. DON'T make panic & recovery
+	// primary control flows in an app. panic is expensive
+	// instead, could:
+	r, ok := wc.(io.Reader)
+	if ok {
+		fmt.Println(r)
+	} else {
+		fmt.Println("conversion failed")
+	}
+
+	// Continuing type conversion...
+	// Empty interface is just that, an interface with no methods on it. What's
+	// nice about it is that *everything* can be cast into an object that has no
+	// methods on it, even primitives. (i.e. can cast an integer to an emtpy interface)
+	// Useful in situations where you have multiple things you need to work with
+	// that aren't type compatible
+	// Problem with empty interface: can't do anything with it. Because it has no
+	// exposed methods.
+	// In order to do something useful with a variable that has the type of an empty
+	// interface, you'll need to do a type conversion, or you'll need to start using
+	// the "reflect" package in order to figure out what kind of object you're dealing with.
+	var someObject interface{} = NewBufferedWriterCloser()
+	// ^ Defining an interface on the fly
+	// Trying to type cast into a WriterCloser
+	if wc, ok := someObject.(WriterCloser); ok {
+		wc.Write([]byte("still works"))
+		wc.Close()
+	}
+	// Empty interface is very common. BUT - it's almost always gonna be an intermediate step.
 }
 
 // If this were a struct, we'd enter the data we want the struct to hold on to -
